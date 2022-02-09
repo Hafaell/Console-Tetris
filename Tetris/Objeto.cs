@@ -8,93 +8,56 @@ namespace Tetris
 {
     public class Objeto
     {
-        public Objeto(int x, int y)
+        public Objeto(List<Cordenada> cordenadas, string caracter)
         {
-            X = x;
-            Y = y;
+            Cordenadas = cordenadas;
+            Caracter = caracter;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public char[,] Caracteres { get; set; }
+        public string Caracter;
+        public List<Cordenada> Cordenadas;
+        private bool Lock;
 
-        Grid grid = new Grid('-');
-
-        public void Left()
+        public void Rotate()
         {
-            if (X > 0)
-                X--;
+
         }
 
         public void Right()
         {
-            if (X < grid.x - LarguraObjeto())
-                X++;
-        }
-
-        public int LarguraObjeto()
-        {
-            int largura = 0;
-
-            for (int i = 0; i < 4; i++)
+            if (!Cordenadas.Any(corden => corden.X == Grid.X - 1) && !Lock)
             {
-                for (int j = 0; j < 4; j++)
+                foreach (var item in Cordenadas)
                 {
-                    var caractere = (char)Program.actualObject.Caracteres.GetValue(i, j);
-
-                    if (caractere == '-')
-                        continue;
-                    else if (largura < j)
-                    {
-                        largura = j;
-                    }
+                    item.X++;
                 }
             }
-
-            return largura + 1;
         }
 
-        public int AlturaObjeto()
+        public void Left()
         {
-            int altura = 0;
-
-            for (int i = 0; i < 4; i++)
+            if (!Cordenadas.Any(corden => corden.X == 0) && !Lock)
             {
-                for (int j = 0; j < 4; j++)
+                foreach (var item in Cordenadas)
                 {
-                    var caractere = (char)Program.actualObject.Caracteres.GetValue(i, j);
-
-                    if (caractere == '-')
-                        continue;
-                    else if (altura < i)
-                    {
-                        altura = i;
-                    }
+                    item.X --;
                 }
             }
-
-            return altura + 1;
         }
-    }
 
-    public class NewObject : Objeto
-    {
-        static char _ = '-';
-
-        public static char[,] quadrado = new char[4, 4] { { '@', '@', _, _},
-                                                          { '@', '@', _, _},
-                                                          { _, _, _, _},
-                                                          { _, _, _, _ }};
-
-        public static char[,] retangulo = new char[4, 4] { { '$', '$', _, _ },
-                                                           { '$', '$', _, _ },
-                                                           { '$', '$', _, _ },
-                                                           { _, _, _, _ }};
-
-
-        public NewObject(char[,] matriz, int x, int y) : base(x, y)
+        public void Down()
         {
-            Caracteres = matriz;
+            if (!Cordenadas.Any(corden => corden.Y == Grid.Y - 1))
+            {
+                foreach (var item in Cordenadas)
+                {
+                    item.Y++;
+                }
+            }
+            else
+            {
+                Lock = true;
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,57 +9,76 @@ namespace Tetris
 {
     public class Grid
     {
-        public int x = 10;
-        public int y = 5;
+        public static int X { get; private set; }
+        public static int Y { get; private set; }
+        private List<Objeto> objects = new List<Objeto>();
+        public Objeto currentObject;
+        private string[,] currentGrid;
+        private string branco = "-";
 
-        public Grid(char caractere)
+        public Grid(int x, int y)
         {
-            int[,] grid = new int[x, y];
-
-            for (int yy = 0; yy < y; yy++)
-            {
-                for (int xx = 0; xx < x; xx++)
-                {
-                    Console.Write(caractere);
-                }
-                Console.Write("\n");
-            }
+            X = x; 
+            Y = y;
+            DrawGrid();
+            Thread.Sleep(200);
         }
 
-        public static string[,] DrawObject(List<Cordenada> posicao)
+        public void DrawGrid()
         {
-            int x = 10;
-            int y = 7;
+            var grid = new string[X, Y];
 
-            var grid = new string[x, y];
-
-            for (int i = 0; i < x; i++)
+            if (objects.Count <= 0)
             {
-                for (int j = 0; j < y; j++)
+                for (int i = 0; i < X; i++)
                 {
-                    foreach (var item in posicao)
+                    for (int j = 0; j < Y; j++)
                     {
-                        if (item.X == j && item.Y == j)
-                            grid[i, j] = "@";
+                        grid[i, j] = branco;
+                    }
+                }
+
+            }
+            else
+            {
+                for (int i = 0; i < X; i++)
+                {
+                    for (int j = 0; j < Y; j++)
+                    {
+                        Console.SetCursorPosition(i, j);
+
+                        var possuiCordenada = false;
+                        Objeto index = null;
+
+                        foreach (var item in objects)
+                        {
+                            possuiCordenada = item.Cordenadas.Any(cordenada => cordenada.X == i && cordenada.Y == j);
+
+                            if (possuiCordenada)
+                            {
+                                index = item;
+                                break;
+                            }
+                        }
+
+                        if (possuiCordenada)
+                        {
+                            Console.Write(index.Caracter);
+                        }
                         else
-                            grid[i, j] = "-";
+                        {
+                            Console.Write(branco);
+                        }
                     }
                 }
             }
-
-            return grid;
+                currentGrid = grid;
         }
 
-        public class Cordenada
+        public void AddObjects(Objeto obj)
         {
-            public int X;
-            public int Y;
-
-            public Cordenada(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
+            currentObject = obj;
+            objects.Add(obj);
         }
     }
 }

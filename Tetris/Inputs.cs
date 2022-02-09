@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Tetris
@@ -9,35 +10,51 @@ namespace Tetris
     public class Inputs
     {
         private ConsoleKeyInfo input;
+        public Grid Grid;
+
+        public Inputs(Grid grid)
+        {
+            Grid = grid;
+        }
 
         public void HandleInput()
         {
-            switch (input.Key)
+            new Thread(() =>
             {
-                case ConsoleKey.UpArrow:
-                    Console.WriteLine($"clicou em {ConsoleKey.UpArrow}");
-                    break;
+                while (true)
+                {
+                    var read = Console.ReadKey(true);
 
-                case ConsoleKey.DownArrow:
-                    Console.WriteLine($"clicou em {ConsoleKey.DownArrow}");
-                    break;
+                    switch (read.Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            Grid.currentObject.Rotate();
+                            break;
 
-                case ConsoleKey.LeftArrow:
-                    Console.WriteLine($"clicou em {ConsoleKey.LeftArrow}");
-                    break;
+                        case ConsoleKey.DownArrow:
+                            Grid.currentObject.Down();
+                            break;
 
-                case ConsoleKey.RightArrow:
-                    Console.WriteLine($"clicou em {ConsoleKey.RightArrow}");
-                    break;
-            }
+                        case ConsoleKey.LeftArrow:
+                            Grid.currentObject.Left();
+                            break;
 
-            input = new ConsoleKeyInfo();
+                        case ConsoleKey.RightArrow:
+                            Grid.currentObject.Right();
+                            break;
+                    }
+                    input = new ConsoleKeyInfo();
+
+                    Task.Delay(5).Wait();
+                }
+            }).Start();
         }
 
         public void Input()
         {
             while (true)
             {
+               
                 input = Console.ReadKey(true);
             }
         }

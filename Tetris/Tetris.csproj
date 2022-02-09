@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StartGame.cs" />
+    <Compile Include="Cordenada.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Inputs.cs" />
     <Compile Include="Objeto.cs" />

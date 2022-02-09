@@ -11,6 +11,8 @@ namespace Tetris
     {
         static Inputs inputClass;
 
+        public static NewObject actualObject;
+
         static void Main(string[] args)
         {
             Start();
@@ -24,16 +26,21 @@ namespace Tetris
 
             inputClass = new Inputs();
 
-            new Grid(10, 7);
+            var random = new Random();
+            var sortearObjeto = random.Next(0, 2);
 
-            NovoObjeto(
-                new char[4, 4] { { '@', '@', '_', '_' },
-                                 { '@', '@', '@', '_' },
-                                 { '@', '_', '_', '_' },
-                                 { '@', '_', '_', '_' }},
+            if (sortearObjeto == 0)
+            {
+                NovoObjeto(NewObject.quadrado, 1, 0);
+            }
+            else if (sortearObjeto == 1)
+            {
+                NovoObjeto(NewObject.retangulo, 1, 0);
+            }
 
-                1, 2
-                );
+            new Grid('-');
+
+            Console.SetCursorPosition(0, 0);
 
             Thread inputThread = new Thread(inputClass.Input);
             inputThread.Start();
@@ -52,15 +59,19 @@ namespace Tetris
 
         public static void NovoObjeto(char[,] matriz, int x, int y)
         {
-            var obj = new NewObject(matriz, x, y);
+            actualObject = new NewObject(matriz, x, y);
 
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    var caractere = (char)obj.Caracteres.GetValue(i, j);
-                    Console.SetCursorPosition(obj.X + j, obj.Y + i);
+                    var caractere = (char)actualObject.Caracteres.GetValue(i, j);
+                    if (caractere == '-')
+                        continue; 
+
+                    Console.SetCursorPosition(actualObject.X + j, actualObject.Y + i);
                     Console.Write(caractere);
+                    
                 }
 
                 Console.Write("\n");

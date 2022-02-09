@@ -9,12 +9,11 @@ namespace Tetris
 {
     public class Inputs
     {
-        private ConsoleKeyInfo input;
-        public Grid Grid;
+        public Grid grid;
 
-        public Inputs(Grid grid)
+        public Inputs(Grid currentGrid)
         {
-            Grid = grid;
+            grid = currentGrid;
         }
 
         public void HandleInput()
@@ -28,35 +27,26 @@ namespace Tetris
                     switch (read.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            Grid.currentObject.Rotate();
+                            grid.currentObject.Rotate();
                             break;
 
                         case ConsoleKey.DownArrow:
-                            Grid.currentObject.Down();
+                            grid.currentObject.Down();
                             break;
 
                         case ConsoleKey.LeftArrow:
-                            Grid.currentObject.Left();
+                            grid.currentObject.Left();
                             break;
 
                         case ConsoleKey.RightArrow:
-                            Grid.currentObject.Right();
+                            grid.currentObject.Right();
                             break;
                     }
-                    input = new ConsoleKeyInfo();
 
-                    Task.Delay(5).Wait();
+                    Thread.Sleep(5);
                 }
             }).Start();
         }
 
-        public void Input()
-        {
-            while (true)
-            {
-               
-                input = Console.ReadKey(true);
-            }
-        }
     }
 }

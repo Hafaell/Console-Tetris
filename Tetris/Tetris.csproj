@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="Square.cs" />
     <Compile Include="StartGame.cs" />
     <Compile Include="Cordenada.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Inputs.cs" />
-    <Compile Include="Objeto.cs" />
+    <Compile Include="TetrisObjects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

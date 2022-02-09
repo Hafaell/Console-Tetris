@@ -5,26 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-
 namespace Tetris
 {
     public class StartGame
     {
-        Inputs inputClass;
-        Grid grid;
+        private Inputs inputClass;
+        private Grid grid;
 
         public void Start()
         {
             Console.CursorVisible = false;
             Console.Title = "Console Tetris";
-            grid = new Grid(10, 20);
 
+            grid = new Grid(10, 20);
             inputClass = new Inputs(grid);
 
-            grid.AddObjects(new Objeto(new List<Cordenada>() { new Cordenada (0, 0), (new Cordenada (1, 0)) },  "@"));
+            grid.AddObjects(new Square());
+        }
 
-            Thread inputThread = new Thread(inputClass.HandleInput);
-            inputThread.Start();
+        public void Update()
+        {
+            new Thread(inputClass.HandleInput).Start();
 
             new Thread(() =>
             {
@@ -33,17 +34,16 @@ namespace Tetris
                     grid.DrawGrid();
                     Thread.Sleep(1);
                 }
-            }
-                
-            ).Start();
-        }
 
-        public void Update()
-        {
+            }).Start();
+
             while (true)
             {
-                //inputClass.HandleInput();
                 grid.currentObject.Down();
+
+                if (grid.currentObject.LockObject)
+                    grid.AddObjects(grid.nextObject);
+
                 Thread.Sleep(500);
             }
         }

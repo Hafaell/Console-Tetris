@@ -11,10 +11,12 @@ namespace Tetris
     {
         public static int X { get; private set; }
         public static int Y { get; private set; }
-        private List<Objeto> objects = new List<Objeto>();
-        public Objeto currentObject;
+
         private string[,] currentGrid;
         private string branco = "-";
+        private List<TetrisObjects> objects = new List<TetrisObjects>();
+        public TetrisObjects currentObject;
+        public TetrisObjects nextObject;
 
         public Grid(int x, int y)
         {
@@ -48,11 +50,11 @@ namespace Tetris
                         Console.SetCursorPosition(i, j);
 
                         var possuiCordenada = false;
-                        Objeto index = null;
+                        TetrisObjects index = null;
 
                         foreach (var item in objects)
                         {
-                            possuiCordenada = item.Cordenadas.Any(cordenada => cordenada.X == i && cordenada.Y == j);
+                            possuiCordenada = item.Coordinates.Any(cordenada => cordenada.X == i && cordenada.Y == j);
 
                             if (possuiCordenada)
                             {
@@ -75,10 +77,26 @@ namespace Tetris
                 currentGrid = grid;
         }
 
-        public void AddObjects(Objeto obj)
+        public void AddObjects(TetrisObjects obj)
         {
             currentObject = obj;
             objects.Add(obj);
+            NextObject();
+        }
+
+        public void NextObject()
+        {
+            Random rand = new Random();
+            int randomNumber = rand.Next(0, 10);
+
+            if (randomNumber < 5)
+            {
+                nextObject = new Rectangle();
+            }
+            else
+            {
+                nextObject = new Square();
+            }
         }
     }
 }

@@ -16,12 +16,14 @@ namespace Tetris.Pieces
             coordinates = coordList;
             caracter = caracterType;
             color = consoleColor;
+            collision = new Collisions();
         }
 
         private string caracter;
         private ConsoleColor color;
         private List<Cordenada> coordinates;
         private bool lockObject;
+        private Collisions collision;
 
         public void Rotate()
         {
@@ -57,7 +59,7 @@ namespace Tetris.Pieces
 
         private void MovementX(int value)
         {
-            if (IsColisao(value, 0))
+            if (collision.IsColisao(value, 0))
                 return;
 
             foreach (var item in coordinates)
@@ -68,7 +70,7 @@ namespace Tetris.Pieces
 
         public void MovementY(int value)
         {
-            if (IsColisao(0, value))
+            if (collision.IsColisao(0, value))
             {
                 lockObject = true;
                 return;
@@ -80,23 +82,7 @@ namespace Tetris.Pieces
             }
         }
 
-        public bool IsColisao(int x, int y)
-        {
-            foreach (var objLock in Grid.ObjectsLock)
-            {
-                foreach (var objLockPos in objLock.Coordinates)
-                {
-                    var possuiCordenada = coordinates.Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
-
-                    if (possuiCordenada)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
+        
 
     }
 }

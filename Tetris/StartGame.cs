@@ -6,6 +6,7 @@ namespace Tetris
 {
     public class StartGame
     {
+        private GameManager gameManager;
         private Inputs inputClass;
         private Score score;
         private Grid grid;
@@ -15,12 +16,15 @@ namespace Tetris
             Console.CursorVisible = false;
             Console.Title = "Console Tetris";
 
-            grid = new Grid(10, 20);
-            grid.NextObject();
-            grid.AddObjects(grid.nextObject);
+            gameManager = GameManager.GetInstance();
+
+            gameManager.NextObject();
+            gameManager.AddObjects(gameManager.nextObject);
 
             score = new Score();
-            inputClass = new Inputs(grid);
+            grid = new Grid(10, 20);
+
+            inputClass = new Inputs();
         }
 
         public void Update()
@@ -32,20 +36,21 @@ namespace Tetris
                 while (true)
                 {
                     grid.DrawGrid();
-                    Thread.Sleep(1);
+                    score.DrawScore();
+                    Thread.Sleep(5);
                 }
 
             }).Start();
 
             while (true)
             {
-                grid.currentObject.Down();
+                gameManager.currentObject.Down();
 
-                if (grid.currentObject.LockObject)
+                if (gameManager.currentObject.LockObject)
                 {
-                    grid.AddObjectsLock(grid.currentObject);
+                    gameManager.AddObjectsLock(gameManager.currentObject);
                     score.CompleteLine();
-                    grid.AddObjects(grid.nextObject);
+                    gameManager.AddObjects(gameManager.nextObject);
                 }
 
                 Thread.Sleep(500);

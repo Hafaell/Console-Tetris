@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collisions.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Pieces\Zpiece.cs" />
     <Compile Include="Pieces\Lpiece.cs" />
     <Compile Include="Pieces\Rectangle.cs" />

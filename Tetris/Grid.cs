@@ -6,31 +6,24 @@ using Tetris.Pieces;
 
 namespace Tetris
 {
-    public enum PieceTypes
-    {
-        Zpiece, Lpiece, Rectange, Square
-    }
-
-    public class Grid
+    
+    class Grid
     {
         public static int X { get; private set; }
         public static int Y { get; private set; }
-        public static List<TetrisObjects> ObjectsLock { get => objectsLock; }
-
-        public TetrisObjects currentObject;
-        public TetrisObjects nextObject;
 
         private string[,] currentGrid;
         private string branco = "-";
-        private List<TetrisObjects> objects = new List<TetrisObjects>();
-        private static List<TetrisObjects> objectsLock = new List<TetrisObjects>();
 
-        private PieceTypes piceTypes;
+        GameManager gameManager;
 
         public Grid(int x, int y)
         {
+            gameManager = GameManager.instance;
+
             X = x;
             Y = y;
+            
             DrawGrid();
             Thread.Sleep(200);
         }
@@ -39,7 +32,7 @@ namespace Tetris
         {
             var grid = new string[X, Y];
 
-            if (objects.Count <= 0)
+            if (gameManager.Objects.Count <= 0)
             {
                 for (int i = 0; i < X; i++)
                 {
@@ -60,7 +53,7 @@ namespace Tetris
                         var possuiCordenada = false;
                         TetrisObjects index = null;
 
-                        foreach (var item in objects)
+                        foreach (var item in gameManager.Objects)
                         {
                             possuiCordenada = item.Coordinates.Any(cordenada => cordenada.X == i && cordenada.Y == j);
 
@@ -84,47 +77,8 @@ namespace Tetris
                     }
                 }
             }
+
             currentGrid = grid;
         }
-
-        public void AddObjects(TetrisObjects obj)
-        {
-            currentObject = obj;
-            objects.Add(obj);
-            NextObject();
-        }
-
-        public void AddObjectsLock(TetrisObjects obj)
-        {
-            objectsLock.Add(obj);
-        }
-
-        public void NextObject()
-        {
-            Random rand = new Random();
-            piceTypes = (PieceTypes)rand.Next(0, 4);
-
-            switch (piceTypes)
-            {
-                case PieceTypes.Lpiece:
-                    nextObject = new Lpiece();
-                    break;
-
-                case PieceTypes.Zpiece:
-                    nextObject = new Zpiece();
-                    break;
-
-                case PieceTypes.Rectange:
-                    nextObject = new Rectangle();
-                    break;
-
-                case PieceTypes.Square:
-                    nextObject = new Square();
-                    break;
-            }
-
-        }
-
-        
     }
 }

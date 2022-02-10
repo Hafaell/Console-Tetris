@@ -3,13 +3,13 @@ using System.Threading;
 
 namespace Tetris
 {
-    public class Inputs
+    class Inputs
     {
-        public Grid grid;
+        GameManager gameManager;
 
-        public Inputs(Grid currentGrid)
+        public Inputs()
         {
-            grid = currentGrid;
+            gameManager = GameManager.instance;
         }
 
         public void HandleInput()
@@ -23,19 +23,19 @@ namespace Tetris
                     switch (read.Key)
                     {
                         case ConsoleKey.UpArrow:
-                            grid.currentObject.Rotate();
+                            gameManager.currentObject.Rotate();
                             break;
 
                         case ConsoleKey.DownArrow:
-                            grid.currentObject.Down();
+                            gameManager.currentObject.Down();
                             break;
 
                         case ConsoleKey.LeftArrow:
-                            grid.currentObject.Left();
+                            gameManager.currentObject.Left();
                             break;
 
                         case ConsoleKey.RightArrow:
-                            grid.currentObject.Right();
+                            gameManager.currentObject.Right();
                             break;
                     }
 

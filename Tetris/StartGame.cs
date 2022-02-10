@@ -7,6 +7,7 @@ namespace Tetris
     public class StartGame
     {
         private Inputs inputClass;
+        private Score score;
         private Grid grid;
 
         public void Start()
@@ -18,6 +19,7 @@ namespace Tetris
             grid.NextObject();
             grid.AddObjects(grid.nextObject);
 
+            score = new Score();
             inputClass = new Inputs(grid);
         }
 
@@ -42,7 +44,7 @@ namespace Tetris
                 if (grid.currentObject.LockObject)
                 {
                     grid.AddObjectsLock(grid.currentObject);
-                    grid.CompleteLine();
+                    score.CompleteLine();
                     grid.AddObjects(grid.nextObject);
                 }
 

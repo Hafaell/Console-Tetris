@@ -111,7 +111,7 @@ namespace Tetris
                     break;
 
                 case PieceTypes.Zpiece:
-                    nextObject = new Square();
+                    nextObject = new Zpiece();
                     break;
 
                 case PieceTypes.Rectange:
@@ -125,9 +125,6 @@ namespace Tetris
 
         }
 
-        public void CompleteLine()
-        {
-            
-        }
+        
     }
 }

@@ -10,7 +10,7 @@ namespace Tetris.Pieces
             new Cordenada(5, 0),
             new Cordenada(4, 1),
             new Cordenada(3, 1)
-        }, "#", ConsoleColor.Green)
+        }, "*", ConsoleColor.Green)
         { }
     }
 }

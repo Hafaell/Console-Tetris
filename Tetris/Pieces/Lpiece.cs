@@ -11,7 +11,7 @@ namespace Tetris.Pieces
             new Cordenada(4, 2),
             new Cordenada(4, 3),
             new Cordenada(5, 3)
-        }, "#", ConsoleColor.Magenta)
+        }, "%", ConsoleColor.Magenta)
         { }
     }
 }

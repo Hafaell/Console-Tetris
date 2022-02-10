@@ -2,27 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Text;
-using System.Threading.Tasks;
+using Tetris.Pieces;
 
 namespace Tetris
 {
+    public enum PieceTypes
+    {
+        Zpiece, Lpiece, Rectange, Square
+    }
+
     public class Grid
     {
         public static int X { get; private set; }
         public static int Y { get; private set; }
         public static List<TetrisObjects> ObjectsLock { get => objectsLock; }
 
+        public TetrisObjects currentObject;
+        public TetrisObjects nextObject;
+
         private string[,] currentGrid;
         private string branco = "-";
         private List<TetrisObjects> objects = new List<TetrisObjects>();
         private static List<TetrisObjects> objectsLock = new List<TetrisObjects>();
-        public TetrisObjects currentObject;
-        public TetrisObjects nextObject;
+
+        private PieceTypes piceTypes;
 
         public Grid(int x, int y)
         {
-            X = x; 
+            X = x;
             Y = y;
             DrawGrid();
             Thread.Sleep(200);
@@ -66,16 +73,18 @@ namespace Tetris
 
                         if (possuiCordenada)
                         {
+                            Console.ForegroundColor = index.Color;
                             Console.Write(index.Caracter);
                         }
                         else
                         {
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.Write(branco);
                         }
                     }
                 }
             }
-                currentGrid = grid;
+            currentGrid = grid;
         }
 
         public void AddObjects(TetrisObjects obj)
@@ -93,16 +102,32 @@ namespace Tetris
         public void NextObject()
         {
             Random rand = new Random();
-            int randomNumber = rand.Next(0, 10);
+            piceTypes = (PieceTypes)rand.Next(0, 4);
 
-            if (randomNumber < 5)
+            switch (piceTypes)
             {
-                nextObject = new Rectangle();
+                case PieceTypes.Lpiece:
+                    nextObject = new Lpiece();
+                    break;
+
+                case PieceTypes.Zpiece:
+                    nextObject = new Square();
+                    break;
+
+                case PieceTypes.Rectange:
+                    nextObject = new Rectangle();
+                    break;
+
+                case PieceTypes.Square:
+                    nextObject = new Square();
+                    break;
             }
-            else
-            {
-                nextObject = new Square();
-            }
+
+        }
+
+        public void CompleteLine()
+        {
+            
         }
     }
 }

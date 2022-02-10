@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using Tetris.Pieces;
 
 namespace Tetris
 {
@@ -18,9 +15,10 @@ namespace Tetris
             Console.Title = "Console Tetris";
 
             grid = new Grid(10, 20);
-            inputClass = new Inputs(grid);
+            grid.NextObject();
+            grid.AddObjects(grid.nextObject);
 
-            grid.AddObjects(new Square());
+            inputClass = new Inputs(grid);
         }
 
         public void Update()
@@ -44,6 +42,7 @@ namespace Tetris
                 if (grid.currentObject.LockObject)
                 {
                     grid.AddObjectsLock(grid.currentObject);
+                    grid.CompleteLine();
                     grid.AddObjects(grid.nextObject);
                 }
 

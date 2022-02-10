@@ -2,27 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tetris
+namespace Tetris.Pieces
 {
     public class TetrisObjects
     {
         public string Caracter { get => caracter; }
         public bool LockObject { get => lockObject; }
+        public ConsoleColor Color { get => color; }
         public List<Cordenada> Coordinates { get => coordinates; }
 
-        public TetrisObjects(List<Cordenada> coordList, string caracterType)
+        public TetrisObjects(List<Cordenada> coordList, string caracterType, ConsoleColor consoleColor)
         {
             coordinates = coordList;
             caracter = caracterType;
+            color = consoleColor;
         }
 
         private string caracter;
+        private ConsoleColor color;
         private List<Cordenada> coordinates;
         private bool lockObject;
 
         public void Rotate()
         {
-
+            
         }
 
         public void Right()

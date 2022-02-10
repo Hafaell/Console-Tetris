@@ -42,7 +42,10 @@ namespace Tetris
                 grid.currentObject.Down();
 
                 if (grid.currentObject.LockObject)
+                {
+                    grid.AddObjectsLock(grid.currentObject);
                     grid.AddObjects(grid.nextObject);
+                }
 
                 Thread.Sleep(500);
             }

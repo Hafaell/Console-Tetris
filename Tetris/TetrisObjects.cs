@@ -27,7 +27,7 @@ namespace Tetris
 
         public void Right()
         {
-            if (lockObject || coordinates.Any(corden => corden.X == Grid.X - 1) )
+            if (lockObject || coordinates.Any(corden => corden.X == Grid.X - 1))
                 return;
 
             MovementX(1);
@@ -43,7 +43,7 @@ namespace Tetris
 
         public void Down()
         {
-            if(coordinates.Any(corden => corden.Y == Grid.Y - 1))
+            if (coordinates.Any(corden => corden.Y == Grid.Y - 1))
             {
                 lockObject = true;
                 return;
@@ -54,18 +54,46 @@ namespace Tetris
 
         private void MovementX(int value)
         {
+            if (IsColisao(value, 0))
+                return;
+
             foreach (var item in coordinates)
             {
                 item.X += value;
             }
         }
 
-        private void MovementY(int value)
+        public void MovementY(int value)
         {
+            if (IsColisao(0, value))
+            {
+                lockObject = true;
+                return;
+            }
+
             foreach (var item in coordinates)
             {
                 item.Y += value;
             }
         }
+
+        public bool IsColisao(int x, int y)
+        {
+            foreach (var objLock in Grid.ObjectsLock)
+            {
+                foreach (var objLockPos in objLock.Coordinates)
+                {
+                    var possuiCordenada = coordinates.Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
+
+                    if (possuiCordenada)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
     }
 }

@@ -11,10 +11,12 @@ namespace Tetris
     {
         public static int X { get; private set; }
         public static int Y { get; private set; }
+        public static List<TetrisObjects> ObjectsLock { get => objectsLock; }
 
         private string[,] currentGrid;
         private string branco = "-";
         private List<TetrisObjects> objects = new List<TetrisObjects>();
+        private static List<TetrisObjects> objectsLock = new List<TetrisObjects>();
         public TetrisObjects currentObject;
         public TetrisObjects nextObject;
 
@@ -39,7 +41,6 @@ namespace Tetris
                         grid[i, j] = branco;
                     }
                 }
-
             }
             else
             {
@@ -82,6 +83,11 @@ namespace Tetris
             currentObject = obj;
             objects.Add(obj);
             NextObject();
+        }
+
+        public void AddObjectsLock(TetrisObjects obj)
+        {
+            objectsLock.Add(obj);
         }
 
         public void NextObject()

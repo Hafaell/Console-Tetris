@@ -9,39 +9,41 @@ namespace Tetris
 
         public Inputs()
         {
-            gameManager = GameManager.instance;
+            gameManager = GameManager.GetInstance();
         }
 
         public void HandleInput()
         {
-            new Thread(() =>
+            while (true)
             {
-                while (true)
+                var read = Console.ReadKey(true);
+
+                switch (read.Key)
                 {
-                    var read = Console.ReadKey(true);
+                    case ConsoleKey.UpArrow:
+                        gameManager.CurrentObject.Rotate();
+                        break;
 
-                    switch (read.Key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            gameManager.currentObject.Rotate();
-                            break;
+                    case ConsoleKey.R:
+                        if (gameManager.Lose)
+                            GameManager.RestartGame_ACT?.Invoke();
+                        break;
 
-                        case ConsoleKey.DownArrow:
-                            gameManager.currentObject.Down();
-                            break;
+                    case ConsoleKey.DownArrow:
+                        gameManager.CurrentObject.Down();
+                        break;
 
-                        case ConsoleKey.LeftArrow:
-                            gameManager.currentObject.Left();
-                            break;
+                    case ConsoleKey.LeftArrow:
+                        gameManager.CurrentObject.Left();
+                        break;
 
-                        case ConsoleKey.RightArrow:
-                            gameManager.currentObject.Right();
-                            break;
-                    }
-
-                    Thread.Sleep(5);
+                    case ConsoleKey.RightArrow:
+                        gameManager.CurrentObject.Right();
+                        break;
                 }
-            }).Start();
+
+                Thread.Sleep(5);
+            }
         }
 
     }

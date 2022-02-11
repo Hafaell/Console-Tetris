@@ -17,13 +17,15 @@ namespace Tetris.Pieces
             caracter = caracterType;
             color = consoleColor;
             collision = new Collisions();
+            gameManager = GameManager.GetInstance();
         }
 
-        private string caracter;
+        GameManager gameManager;
         private ConsoleColor color;
-        private List<Cordenada> coordinates;
+        private string caracter;
         private bool lockObject;
         private Collisions collision;
+        private List<Cordenada> coordinates;
 
         public void Rotate()
         {
@@ -81,8 +83,5 @@ namespace Tetris.Pieces
                 item.Y += value;
             }
         }
-
-        
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Tetris
 {
@@ -12,16 +8,16 @@ namespace Tetris
 
         public Collisions()
         {
-            gameManager = GameManager.instance;
+            gameManager = GameManager.GetInstance();
         }
 
         public bool IsColisao(int x, int y)
         {
-            foreach (var objLock in gameManager.ObjectsLock)
+            foreach (var objLock in gameManager.Objects.Where(obj => obj.LockObject == true))
             {
                 foreach (var objLockPos in objLock.Coordinates)
                 {
-                    var possuiCordenada = gameManager.currentObject.Coordinates.Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
+                    var possuiCordenada = gameManager.CurrentObject.Coordinates.Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
 
                     if (possuiCordenada)
                     {

@@ -18,8 +18,8 @@ namespace Tetris
 
             gameManager = GameManager.GetInstance();
 
-            gameManager.NextObject();
-            gameManager.AddObjects(gameManager.nextObject);
+            gameManager.SelectNextObject();
+            gameManager.AddObjects(gameManager.NextObject);
 
             score = new Score();
             grid = new Grid(10, 20);
@@ -35,28 +35,38 @@ namespace Tetris
             {
                 while (true)
                 {
-                    grid.DrawGrid();
-                    score.DrawScore();
+                    if (!gameManager.Lose)
+                    {
+                        grid.DrawGrid();
+                        score.DrawScore();
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(20, 0);
+                        Console.Write("Lose");
+                    }
+
                     Thread.Sleep(5);
                 }
 
             }).Start();
 
-            while (true)
+            new Thread(() =>
             {
-                gameManager.currentObject.Down();
-
-                if (gameManager.currentObject.LockObject)
+                while (true)
                 {
-                    gameManager.AddObjectsLock(gameManager.currentObject);
-                    score.CompleteLine();
-                    gameManager.AddObjects(gameManager.nextObject);
+                    gameManager.CurrentObject.Down();
+
+                    if (gameManager.CurrentObject.LockObject)
+                    {
+                        score.CompleteLine();
+                        gameManager.AddObjects(gameManager.NextObject);
+                    }
+
+                    Thread.Sleep(500);
                 }
-
-                Thread.Sleep(500);
-            }
+            }).Start();
         }
-
     }
 
 

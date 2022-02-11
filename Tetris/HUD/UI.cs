@@ -3,13 +3,19 @@ namespace Tetris.HUD
 {
     class UI
     {
+        private int X { get; }
+        private int Y { get; }
+
         public Grid grid;
 
         public static UI instance;
 
-        private UI()
+        private UI(int offSetX, int offSetY)
         {
-            grid = new Grid(10, 20, 5, 5);
+            X = offSetX;
+            Y = offSetY;
+
+            grid = new Grid(20, 20, 30 + offSetX, 0 + offSetY);
         }
 
         public static Grid GetGrid()
@@ -21,7 +27,7 @@ namespace Tetris.HUD
         {
             if (instance == null)
             {
-                instance = new UI();
+                instance = new UI(5, 5);
             }
 
             return instance;

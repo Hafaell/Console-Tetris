@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tetris.HUD;
+using Tetris.Managers;
 
 namespace Tetris.Pieces
 {
@@ -13,11 +15,11 @@ namespace Tetris.Pieces
 
         public TetrisObjects(List<Cordenada> coordList, string caracterType, ConsoleColor consoleColor)
         {
+            gameManager = GameManager.GetInstance();
             coordinates = coordList;
             caracter = caracterType;
             color = consoleColor;
             collision = new Collisions();
-            gameManager = GameManager.GetInstance();
         }
 
         GameManager gameManager;
@@ -34,7 +36,7 @@ namespace Tetris.Pieces
 
         public void Right()
         {
-            if (lockObject || coordinates.Any(corden => corden.X == Grid.X - 1))
+            if (lockObject || coordinates.Any(corden => corden.X == UI.GetGrid().borderX - 1))
                 return;
 
             MovementX(1);
@@ -42,7 +44,7 @@ namespace Tetris.Pieces
 
         public void Left()
         {
-            if (lockObject || coordinates.Any(corden => corden.X == 0))
+            if (lockObject || coordinates.Any(corden => corden.X == UI.GetGrid().posX))
                 return;
 
             MovementX(-1);
@@ -50,7 +52,7 @@ namespace Tetris.Pieces
 
         public void Down()
         {
-            if (coordinates.Any(corden => corden.Y == Grid.Y - 1))
+            if (coordinates.Any(corden => corden.Y == UI.GetGrid().borderY - 1))
             {
                 lockObject = true;
                 return;

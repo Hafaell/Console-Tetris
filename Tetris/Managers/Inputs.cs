@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Tetris
+namespace Tetris.Managers
 {
     class Inputs
     {

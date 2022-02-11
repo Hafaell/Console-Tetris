@@ -1,5 +1,5 @@
 ﻿
-namespace Tetris
+namespace Tetris.Managers
 {
     public class Cordenada
     {

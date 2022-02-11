@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Tetris.Pieces;
+using Tetris.HUD;
+using Tetris.Managers;
 
 namespace Tetris
 {
@@ -9,7 +10,7 @@ namespace Tetris
         private GameManager gameManager;
         private Inputs inputClass;
         private Score score;
-        private Grid grid;
+        private UI ui;
 
         public void Start()
         {
@@ -17,12 +18,12 @@ namespace Tetris
             Console.Title = "Console Tetris";
 
             gameManager = GameManager.GetInstance();
+            ui = UI.GetInstance();
 
             gameManager.SelectNextObject();
             gameManager.AddObjects(gameManager.NextObject);
 
             score = new Score();
-            grid = new Grid(10, 20);
 
             inputClass = new Inputs();
         }
@@ -37,7 +38,7 @@ namespace Tetris
                 {
                     if (!gameManager.Lose)
                     {
-                        grid.DrawGrid();
+                        ui.grid.DrawGrid();
                         score.DrawScore();
                     }
                     else

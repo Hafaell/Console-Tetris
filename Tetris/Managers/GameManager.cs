@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Tetris.Pieces;
 
-namespace Tetris
+namespace Tetris.Managers
 {
     public enum PieceTypes
     {

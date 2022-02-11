@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Tetris.Pieces;
+using Tetris.HUD;
+using Tetris.Managers;
 
 namespace Tetris
 {
@@ -10,14 +11,11 @@ namespace Tetris
         private int posX = 15, posY = 7;
         private int score;
         private int initialScore = 0;
-        GameManager gameManager;
 
         public Score()
         {
             score = initialScore;
-            gameManager = GameManager.GetInstance();
             GameManager.RestartGame_ACT += RestartScore;
-            DrawScore();
         }
 
         private void RestartScore()
@@ -35,21 +33,22 @@ namespace Tetris
 
         public void CompleteLine()
         {
-            if (gameManager.CurrentObject.Coordinates.Any(coord => coord.Y == 0))
+            if (GameManager.instance.CurrentObject.Coordinates.Any(coord => coord.Y == UI.GetGrid().posY))
             {
-                gameManager.Lose = true;
+                var a = UI.GetGrid().borderY - UI.GetGrid().posY;
+                GameManager.instance.Lose = true;
                 return;
             }
 
-            for (int gridY = Grid.Y - 1; gridY > 0; gridY--)
+            for (int gridY = UI.GetGrid().borderY - 1; gridY > UI.GetGrid().posY; gridY--)
             {
                 int scoreIndex = 0;
 
-                foreach (var item in gameManager.Objects.Where(obj => obj.LockObject == true))
+                foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
                 {
                     foreach (var coords in item.Coordinates.Where(coord => coord.Y == gridY))
                     {
-                        for (int gridX = 0; gridX < Grid.X; gridX++)
+                        for (int gridX = UI.GetGrid().posX; gridX < UI.GetGrid().borderX; gridX++)
                         {
                             if (coords.X == gridX && coords.Y == gridY)
                                 scoreIndex++;
@@ -57,7 +56,7 @@ namespace Tetris
                     }
                 }
 
-                if (scoreIndex == Grid.X)
+                if (scoreIndex == UI.GetGrid().borderX - UI.GetGrid().posX)
                     ClearLine(gridY);
             }
         }
@@ -67,9 +66,9 @@ namespace Tetris
             bool needUpdate = false;
             int indexYupdate = 0;
 
-            for (int xLinha = 0; xLinha < Grid.X; xLinha++)
+            for (int xLinha = UI.GetGrid().posX; xLinha < UI.GetGrid().borderX; xLinha++)
             {
-                foreach (var item in gameManager.Objects.Where(obj => obj.LockObject == true))
+                foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
                 {
                     Clear(item, xLinha);
                 }
@@ -102,7 +101,7 @@ namespace Tetris
 
         void UpdateLockObj(int indexYupdate)
         {
-            foreach (var item in gameManager.Objects.Where(obj => obj.LockObject == true))
+            foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
             {
                 foreach (var coord in item.Coordinates)
                 {

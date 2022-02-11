@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Tetris
+namespace Tetris.Managers
 {
     class Collisions
     {

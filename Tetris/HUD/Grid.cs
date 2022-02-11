@@ -2,58 +2,61 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Tetris.Managers;
 using Tetris.Pieces;
 
-namespace Tetris
-{
-    
+namespace Tetris.HUD
+{   
     class Grid
     {
-        public static int X { get; private set; }
-        public static int Y { get; private set; }
+        public int borderX { get; private set; }
+        public int borderY { get; private set; }
 
-        private string[,] currentGrid;
+        public int posX { get; }
+        public int posY { get; } 
+
+        private int sizeX;
+        private int sizeY;
+
         private string branco = "-";
 
-        GameManager gameManager;
-
-        public Grid(int x, int y)
+        public Grid(int sizeX, int sizeY, int posX, int posY)
         {
-            gameManager = GameManager.instance;
+            this.sizeX = sizeX;
+            this.sizeY = sizeY;
 
-            X = x;
-            Y = y;
-            
-            DrawGrid();
-            Thread.Sleep(200);
+            this.posX = posX;
+            this.posY = posY;
+
+            borderX = sizeX + posX;
+            borderY = sizeY + posY;
         }
 
         public void DrawGrid()
         {
-            var grid = new string[X, Y];
-
-            if (gameManager.Objects.Count <= 0)
+            if (GameManager.instance.Objects.Count <= 0)
             {
-                for (int i = 0; i < X; i++)
+                for (int i = posX; i < borderX; i++)
                 {
-                    for (int j = 0; j < Y; j++)
+                    for (int j = posY; j < borderY; j++)
                     {
-                        grid[i, j] = branco;
+                        Console.SetCursorPosition(i, j);
+                        Console.Write(branco);
                     }
                 }
             }
             else
             {
-                for (int i = 0; i < X; i++)
+                for (int i = posX; i < borderX; i++)
                 {
-                    for (int j = 0; j < Y; j++)
+                    for (int j = posY; j < borderY; j++)
                     {
                         Console.SetCursorPosition(i, j);
 
                         var possuiCordenada = false;
                         TetrisObjects index = null;
 
-                        foreach (var item in gameManager.Objects)
+                        foreach (var item in GameManager.instance.Objects)
                         {
                             possuiCordenada = item.Coordinates.Any(cordenada => cordenada.X == i && cordenada.Y == j);
 
@@ -78,7 +81,6 @@ namespace Tetris
                 }
             }
 
-            currentGrid = grid;
         }
     }
 }

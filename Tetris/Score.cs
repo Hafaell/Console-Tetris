@@ -11,11 +11,13 @@ namespace Tetris
         private int posX = 15, posY = 7;
         private int score;
         private int initialScore = 0;
+        private int rotateIndex;
 
         public Score()
         {
             score = initialScore;
             GameManager.RestartGame_ACT += RestartScore;
+            rotateIndex = GameManager.instance.CurrentObject.IndexRotate;
         }
 
         private void RestartScore()
@@ -33,7 +35,7 @@ namespace Tetris
 
         public void CompleteLine()
         {
-            if (GameManager.instance.CurrentObject.Coordinates.Any(coord => coord.Y == UI.GetGrid().posY))
+            if (GameManager.instance.CurrentObject.Coordinates[rotateIndex].Any(coord => coord.Y == UI.GetGrid().posY))
             {
                 var a = UI.GetGrid().borderY - UI.GetGrid().posY;
                 GameManager.instance.Lose = true;
@@ -46,7 +48,7 @@ namespace Tetris
 
                 foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
                 {
-                    foreach (var coords in item.Coordinates.Where(coord => coord.Y == gridY))
+                    foreach (var coords in item.Coordinates[rotateIndex].Where(coord => coord.Y == gridY))
                     {
                         for (int gridX = UI.GetGrid().posX; gridX < UI.GetGrid().borderX; gridX++)
                         {
@@ -82,14 +84,14 @@ namespace Tetris
 
             void Clear(TetrisObjects item, int xLinha)
             {
-                if (item.Coordinates.Any(cord => cord.X == xLinha && cord.Y == y))
+                if (item.Coordinates[rotateIndex].Any(cord => cord.X == xLinha && cord.Y == y))
                 {
-                    for (int i = 0; i < item.Coordinates.Count; i++)
+                    for (int i = 0; i < item.Coordinates[rotateIndex].Count; i++)
                     {
-                        if (item.Coordinates[i].X == xLinha
-                            && item.Coordinates[i].Y == y)
+                        if (item.Coordinates[rotateIndex][i].X == xLinha
+                            && item.Coordinates[rotateIndex][i].Y == y)
                         {
-                            item.Coordinates.RemoveAt(i);
+                            item.Coordinates[rotateIndex].RemoveAt(i);
                             needUpdate = true;
                             indexYupdate = y;
                             score++;
@@ -103,7 +105,7 @@ namespace Tetris
         {
             foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
             {
-                foreach (var coord in item.Coordinates)
+                foreach (var coord in item.Coordinates[rotateIndex])
                 {
                     if (coord.Y < indexYupdate)
                     {

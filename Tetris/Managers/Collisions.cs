@@ -15,9 +15,9 @@ namespace Tetris.Managers
         {
             foreach (var objLock in gameManager.Objects.Where(obj => obj.LockObject == true))
             {
-                foreach (var objLockPos in objLock.Coordinates)
+                foreach (var objLockPos in objLock.Coordinates[objLock.IndexRotate])
                 {
-                    var possuiCordenada = gameManager.CurrentObject.Coordinates.Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
+                    var possuiCordenada = gameManager.CurrentObject.Coordinates[objLock.IndexRotate].Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
 
                     if (possuiCordenada)
                     {

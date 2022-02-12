@@ -20,8 +20,12 @@ namespace Tetris.Managers
 
                 switch (read.Key)
                 {
-                    case ConsoleKey.UpArrow:
-                        gameManager.CurrentObject.Rotate();
+                    case ConsoleKey.D:
+                        gameManager.CurrentObject.Rotate(1);
+                        break;
+
+                    case ConsoleKey.A:
+                        gameManager.CurrentObject.Rotate(-1);
                         break;
 
                     case ConsoleKey.R:

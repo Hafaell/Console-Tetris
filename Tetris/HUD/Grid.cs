@@ -58,7 +58,7 @@ namespace Tetris.HUD
 
                         foreach (var item in GameManager.instance.Objects)
                         {
-                            possuiCordenada = item.Coordinates.Any(cordenada => cordenada.X == i && cordenada.Y == j);
+                            possuiCordenada = item.Coordinates[item.IndexRotate].Any(cordenada => cordenada.X == i && cordenada.Y == j);
 
                             if (possuiCordenada)
                             {

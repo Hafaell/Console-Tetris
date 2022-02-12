@@ -34,7 +34,6 @@ namespace Tetris.Managers
 
         public void AddObjects(TetrisObjects obj)
         {
-            obj = new Rectangle();
             currentObject = obj;
             objects.Add(obj);
             SelectNextObject();
@@ -48,11 +47,13 @@ namespace Tetris.Managers
             switch (piceTypes)
             {
                 case PieceTypes.Lpiece:
-                    nextObject = new Lpiece();
+                    //nextObject = new Lpiece();
+                    nextObject = new Rectangle();
                     break;
 
                 case PieceTypes.Zpiece:
-                    nextObject = new Square();
+                    //nextObject = new Square();
+                    nextObject = new Rectangle();
                     break;
 
                 case PieceTypes.Rectange:
@@ -60,7 +61,8 @@ namespace Tetris.Managers
                     break;
 
                 case PieceTypes.Square:
-                    nextObject = new Square();
+                    //nextObject = new Square();
+                    nextObject = new Rectangle();
                     break;
             }
         }

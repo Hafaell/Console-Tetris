@@ -11,13 +11,20 @@ namespace Tetris.Managers
             gameManager = GameManager.GetInstance();
         }
 
-        public bool IsColisao(int x, int y)
+        public bool IsColision(int x, int y, bool isRotate = false, int index = 0)
         {
             foreach (var objLock in gameManager.Objects.Where(obj => obj.LockObject == true))
             {
                 foreach (var objLockPos in objLock.Coordinates[objLock.IndexRotate])
                 {
-                    var possuiCordenada = gameManager.CurrentObject.Coordinates[objLock.IndexRotate].Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
+                    var possuiCordenada = false;
+
+
+                    if (!isRotate)
+                        possuiCordenada = gameManager.CurrentObject.Coordinates[gameManager.CurrentObject.IndexRotate].Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
+                    else
+                        possuiCordenada = gameManager.CurrentObject.Coordinates[index].Any(cordenada => cordenada.X == objLockPos.X && cordenada.Y == objLockPos.Y);
+
 
                     if (possuiCordenada)
                     {

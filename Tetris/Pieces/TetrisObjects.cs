@@ -41,14 +41,21 @@ namespace Tetris.Pieces
 
             int aux = indexRotate + value;
 
-            if (aux == coordinates.Count || aux == -1)
+            if (aux == coordinates.Count)
             {
                 aux = 0;
             }
 
-            if (coordinates[aux].Any(corden => corden.X == UI.GetGrid().borderX - 1))
+            if (aux == - 1)
+            {
+                aux = coordinates.Count - 1;
+            }
+
+            if (coordinates[aux].Any(corden => corden.X == UI.GetGrid().borderX))
                 return;
-            else if (coordinates[aux].Any(corden => corden.X == UI.GetGrid().posX))
+            else if (coordinates[aux].Any(corden => corden.X == UI.GetGrid().posX - 1))
+                return;
+            else if (collision.IsColision(value, 0, true, aux))
                 return;
 
             indexRotate = aux;
@@ -84,26 +91,32 @@ namespace Tetris.Pieces
 
         private void MovementX(int value)
         {
-            if (collision.IsColisao(value, 0))
+            if (collision.IsColision(value, 0))
                 return;
 
-            foreach (var item in coordinates[indexRotate])
+            foreach (var item in coordinates)
             {
-                item.X += value;
+                foreach (var coord in item)
+                {
+                    coord.X += value;
+                }
             }
         }
 
         public void MovementY(int value)
         {
-            if (collision.IsColisao(0, value))
+            if (collision.IsColision(0, value))
             {
                 lockObject = true;
                 return;
             }
 
-            foreach (var item in coordinates[indexRotate])
+            foreach (var item in coordinates)
             {
-                item.Y += value;
+                foreach (var coord in item)
+                {
+                    coord.Y += value;
+                }
             }
         }
     }

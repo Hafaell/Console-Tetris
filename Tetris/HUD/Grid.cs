@@ -51,32 +51,36 @@ namespace Tetris.HUD
                 {
                     for (int j = posY; j < borderY; j++)
                     {
-                        Console.SetCursorPosition(i, j);
-
-                        var possuiCordenada = false;
-                        TetrisObjects index = null;
-
-                        foreach (var item in GameManager.instance.Objects)
+                        lock (GameManager.instance.Objects)
                         {
-                            possuiCordenada = item.Coordinates[item.IndexRotate].Any(cordenada => cordenada.X == i && cordenada.Y == j);
+                            Console.SetCursorPosition(i, j);
+
+                            var possuiCordenada = false;
+                            TetrisObjects index = null;
+
+                            foreach (var item in GameManager.instance.Objects)
+                            {
+                                possuiCordenada = item.Coordinates[item.IndexRotate].Any(cordenada => cordenada.X == i && cordenada.Y == j);
+
+                                if (possuiCordenada)
+                                {
+                                    index = item;
+                                    break;
+                                }
+                            }
 
                             if (possuiCordenada)
                             {
-                                index = item;
-                                break;
+                                Console.ForegroundColor = index.Color;
+                                Console.Write(index.Caracter);
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.Write(branco);
                             }
                         }
-
-                        if (possuiCordenada)
-                        {
-                            Console.ForegroundColor = index.Color;
-                            Console.Write(index.Caracter);
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write(branco);
-                        }
+                        
                     }
                 }
             }

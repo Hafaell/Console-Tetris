@@ -3,6 +3,7 @@ using System.Linq;
 using Tetris.Pieces;
 using Tetris.HUD;
 using Tetris.Managers;
+using System.Collections.Generic;
 
 namespace Tetris
 {
@@ -33,7 +34,7 @@ namespace Tetris
             Console.Write($"Score: {score}");
         }
 
-        public void CompleteLine()
+        public void ClearLinesComplete()
         {
             var indexRotate = GameManager.instance.CurrentObject.IndexRotate;
 
@@ -43,61 +44,57 @@ namespace Tetris
                 return;
             }
 
+            var lockObjects = GameManager.instance.Objects.Where(obj => obj.LockObject == true);
+
             for (int gridY = UI.GetGrid().borderY - 1; gridY > UI.GetGrid().posY; gridY--)
             {
-                int scoreIndex = 0;
+                var isLineCompleted = true;
 
-                foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
+                for(int xLinha = UI.GetGrid().posX; xLinha < UI.GetGrid().borderX; xLinha++)
                 {
-                    foreach (var coords in item.Coordinates[item.IndexRotate].Where(coord => coord.Y == gridY))
+                    var possuiCoordenada = false;
+
+                    foreach (var lockObject in lockObjects)
                     {
-                        for (int gridX = UI.GetGrid().posX; gridX < UI.GetGrid().borderX; gridX++)
-                        {
-                            if (coords.X == gridX && coords.Y == gridY)
-                                scoreIndex++;
-                        }
+                        possuiCoordenada = lockObject.Coordinates[lockObject.IndexRotate].Any(coord => coord.X == xLinha && coord.Y == gridY);
+
+                        if (possuiCoordenada)
+                            break;
+                    }
+
+                    if (!possuiCoordenada)
+                    {
+                        isLineCompleted = false;
+                        break;
                     }
                 }
 
-                if (scoreIndex == UI.GetGrid().borderX - UI.GetGrid().posX)
-                    ClearLine(gridY);
-            }
-        }
-
-        private void ClearLine(int y)
-        {
-            bool needUpdate = false;
-            int indexYupdate = 0;
-
-            for (int xLinha = UI.GetGrid().posX; xLinha < UI.GetGrid().borderX; xLinha++)
-            {
-                foreach (var item in GameManager.instance.Objects.Where(obj => obj.LockObject == true))
+                if (isLineCompleted)
                 {
-                    Clear(item, xLinha);
+                    for (int xLinha = UI.GetGrid().posX; xLinha < UI.GetGrid().borderX; xLinha++)
+                    {
+                        foreach (var lockObject in lockObjects)
+                        {
+                            var coordenada = lockObject.Coordinates[lockObject.IndexRotate].FirstOrDefault(coord => coord.X == xLinha && coord.Y == gridY);
+                            var possuiCoordenada = coordenada != null;
+
+                            if (possuiCoordenada)
+                            {
+                                lockObject.Coordinates[lockObject.IndexRotate].Remove(coordenada);
+                                score++;
+                            }
+                        }
+                    }
+
+                    UpdateLockObj(gridY);
                 }
             }
 
-            if (!needUpdate)
-                return;
-
-            UpdateLockObj(indexYupdate);
-            CompleteLine();
-
-            void Clear(TetrisObjects item, int xLinha)
+            foreach (var obj in lockObjects.ToList())
             {
-                if (item.Coordinates[item.IndexRotate].Any(cord => cord.X == xLinha && cord.Y == y))
+                if (obj.Coordinates[obj.IndexRotate].Count == 0)
                 {
-                    for (int i = 0; i < item.Coordinates[item.IndexRotate].Count; i++)
-                    {
-                        if (item.Coordinates[item.IndexRotate][i].X == xLinha
-                            && item.Coordinates[item.IndexRotate][i].Y == y)
-                        {
-                            item.Coordinates[item.IndexRotate].RemoveAt(i);
-                            needUpdate = true;
-                            indexYupdate = y;
-                            score++;
-                        }
-                    }
+                    GameManager.instance.Objects.Remove(obj);
                 }
             }
         }
@@ -114,7 +111,6 @@ namespace Tetris
                     }
                 }
             }
-
         }
     }
 }

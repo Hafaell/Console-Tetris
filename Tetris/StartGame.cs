@@ -57,10 +57,10 @@ namespace Tetris
                 while (true)
                 {
                     gameManager.CurrentObject.Down();
+                    score.ClearLinesComplete();
 
                     if (gameManager.CurrentObject.LockObject)
                     {
-                        score.CompleteLine();
                         gameManager.AddObjects(gameManager.NextObject);
                     }
 

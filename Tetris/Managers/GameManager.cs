@@ -51,7 +51,7 @@ namespace Tetris.Managers
                     break;
 
                 case PieceTypes.Zpiece:
-                    nextObject = new Zpiece();
+                    nextObject = new Square();
                     break;
 
                 case PieceTypes.Rectange:

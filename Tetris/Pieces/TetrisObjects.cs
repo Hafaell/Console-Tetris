@@ -9,7 +9,11 @@ namespace Tetris.Pieces
     public class TetrisObjects
     {
         public string Caracter { get => caracter; }
-        public bool LockObject { get => lockObject; }
+        public bool LockObject { set
+            {
+                lockObject = value;
+            }
+            get => lockObject; }
         public ConsoleColor Color { get => color; }
         public int IndexRotate { get => indexRotate; }
         public List<List<Cordenada>> Coordinates { get => coordinates; }
@@ -38,26 +42,26 @@ namespace Tetris.Pieces
             if (lockObject)
                 return;
 
-            int aux = indexRotate + value;
+            int nextIndexRotate = indexRotate + value;
 
-            if (aux == coordinates.Count)
+            if (nextIndexRotate == coordinates.Count)
             {
-                aux = 0;
+                nextIndexRotate = 0;
             }
 
-            if (aux == - 1)
+            if (nextIndexRotate == - 1)
             {
-                aux = coordinates.Count - 1;
+                nextIndexRotate = coordinates.Count - 1;
             }
 
-            if (coordinates[aux].Any(corden => corden.X == UI.GetGrid().borderX))
+            if (coordinates[nextIndexRotate].Any(corden => corden.X == UI.GetGrid().borderX))
                 return;
-            else if (coordinates[aux].Any(corden => corden.X == UI.GetGrid().posX - 1))
+            else if (coordinates[nextIndexRotate].Any(corden => corden.X == UI.GetGrid().posX - 1))
                 return;
-            else if (collision.IsColision(value, 0, true, aux))
+            else if (collision.IsColision(value, 0, nextIndexRotate))
                 return;
 
-            indexRotate = aux;
+            indexRotate = nextIndexRotate;
         }
 
 

@@ -47,13 +47,11 @@ namespace Tetris.Managers
             switch (piceTypes)
             {
                 case PieceTypes.Lpiece:
-                    //nextObject = new Lpiece();
-                    nextObject = new Rectangle();
+                    nextObject = new Lpiece();
                     break;
 
                 case PieceTypes.Zpiece:
-                    //nextObject = new Square();
-                    nextObject = new Rectangle();
+                    nextObject = new Zpiece();
                     break;
 
                 case PieceTypes.Rectange:
@@ -61,8 +59,7 @@ namespace Tetris.Managers
                     break;
 
                 case PieceTypes.Square:
-                    //nextObject = new Square();
-                    nextObject = new Rectangle();
+                    nextObject = new Square();
                     break;
             }
         }

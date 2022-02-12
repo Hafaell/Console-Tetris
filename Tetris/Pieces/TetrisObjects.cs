@@ -14,11 +14,10 @@ namespace Tetris.Pieces
         public int IndexRotate { get => indexRotate; }
         public List<List<Cordenada>> Coordinates { get => coordinates; }
 
-        public TetrisObjects(List<List<Cordenada>> coordList, string caracterType, ConsoleColor consoleColor, int indexRotate)
+        public TetrisObjects(List<List<Cordenada>> coordList, string caracterType, ConsoleColor consoleColor)
         {
             gameManager = GameManager.GetInstance();
             coordinates = coordList;
-            this.indexRotate = indexRotate;
             caracter = caracterType;
             color = consoleColor;
             collision = new Collisions();

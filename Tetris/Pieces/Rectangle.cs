@@ -30,7 +30,7 @@ namespace Tetris.Pieces
                 new Cordenada(mid + 2, posY + 4)
             },
         } 
-            , "#", ConsoleColor.Blue, 0)
+            , "#", ConsoleColor.Blue)
         {}
     }
 }

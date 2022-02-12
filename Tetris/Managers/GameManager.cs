@@ -34,6 +34,7 @@ namespace Tetris.Managers
 
         public void AddObjects(TetrisObjects obj)
         {
+            obj = new Rectangle();
             currentObject = obj;
             objects.Add(obj);
             SelectNextObject();

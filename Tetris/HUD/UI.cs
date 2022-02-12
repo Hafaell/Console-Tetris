@@ -15,7 +15,7 @@ namespace Tetris.HUD
             X = offSetX;
             Y = offSetY;
 
-            grid = new Grid(20, 20, 30 + offSetX, 0 + offSetY);
+            grid = new Grid(10, 20, 0 + offSetX, 0 + offSetY);
         }
 
         public static Grid GetGrid()
@@ -27,7 +27,7 @@ namespace Tetris.HUD
         {
             if (instance == null)
             {
-                instance = new UI(5, 5);
+                instance = new UI(0, 0);
             }
 
             return instance;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tetris.Pieces;
 
 namespace Tetris.Managers
@@ -12,6 +13,8 @@ namespace Tetris.Managers
     class GameManager
     {
         public bool Lose { get => lose; set => lose = value; }
+        public bool IsRealTime { get => isRealTime; set => isRealTime = value; }
+
         public List<TetrisObjects> Objects { get => objects; }
         public TetrisObjects CurrentObject { get => currentObject; }
         public TetrisObjects NextObject { get => nextObject; }
@@ -21,6 +24,7 @@ namespace Tetris.Managers
         private TetrisObjects nextObject;
 
         private bool lose;
+        private bool isRealTime;
 
         private List<TetrisObjects> objects = new List<TetrisObjects>();
 
@@ -51,7 +55,7 @@ namespace Tetris.Managers
                     break;
 
                 case PieceTypes.Zpiece:
-                    nextObject = new Square();
+                    nextObject = new Zpiece();
                     break;
 
                 case PieceTypes.Rectange:
@@ -73,6 +77,13 @@ namespace Tetris.Managers
             AddObjects(NextObject);
 
             lose = false;
+        }
+
+        public IEnumerable<TetrisObjects> ObjectsLock()
+        {
+            var objects = Objects.Where(obj => obj.LockObject == true);
+
+            return objects;
         }
 
         public static GameManager GetInstance()

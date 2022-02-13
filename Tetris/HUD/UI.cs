@@ -1,21 +1,49 @@
 ﻿
+using Tetris.Managers;
+
 namespace Tetris.HUD
 {
     class UI
     {
-        private int X { get; }
-        private int Y { get; }
+        private Vector2 uiPosition;
 
-        public Grid grid;
+        private Grid grid;
+        public Vector2 gridPos = new Vector2(0, 0);
+        public Vector2 gridSize = new Vector2(10, 20);
+
+        private Score score;
+        public Vector2 scorePos = new Vector2(14, 8);
+
+        private NextPiece nextPiece;
+        public Vector2 nextPiecePos = new Vector2(14, 0);
+        public Vector2 nextPieceSize = new Vector2(9, 7);
 
         public static UI instance;
 
-        private UI(int offSetX, int offSetY)
+        private UI(Vector2 position)
         {
-            X = offSetX;
-            Y = offSetY;
+            uiPosition = position;
 
-            grid = new Grid(10, 20, 0 + offSetX, 0 + offSetY);
+            grid = new Grid(
+                new Vector2(uiPosition.x + gridPos.x, uiPosition.y + gridPos.y), 
+                new Vector2(gridSize.x, gridSize.y)
+                );
+
+            score = new Score(
+                new Vector2(uiPosition.x + scorePos.x, uiPosition.y + scorePos.y)
+                );
+
+            nextPiece = new NextPiece(
+                new Vector2(uiPosition.x + nextPiecePos.x, uiPosition.y + nextPiecePos.y),
+                new Vector2(nextPieceSize.x, nextPieceSize.y)
+                );
+        }
+
+        public void DrawUI()
+        {
+            grid.DrawGrid();
+            score.DrawScore();
+            nextPiece.DrawNextPiece();
         }
 
         public static Grid GetGrid()
@@ -23,11 +51,16 @@ namespace Tetris.HUD
             return instance.grid;
         }
 
+        public static Score GetScore()
+        {
+            return instance.score;
+        }
+
         public static UI GetInstance()
         {
             if (instance == null)
             {
-                instance = new UI(0, 0);
+                instance = new UI(new Vector2(50, 1));
             }
 
             return instance;

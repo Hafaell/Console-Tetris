@@ -31,10 +31,13 @@ namespace Tetris.Managers
                     case ConsoleKey.R:
                         if (gameManager.Lose)
                             GameManager.RestartGame_ACT?.Invoke();
+
                         break;
 
                     case ConsoleKey.DownArrow:
-                        gameManager.CurrentObject.Down();
+
+                        if (gameManager.IsRealTime)
+                            gameManager.CurrentObject.Down();
                         break;
 
                     case ConsoleKey.LeftArrow:
@@ -44,7 +47,14 @@ namespace Tetris.Managers
                     case ConsoleKey.RightArrow:
                         gameManager.CurrentObject.Right();
                         break;
+
+                    case ConsoleKey.Tab:
+                        gameManager.IsRealTime = !gameManager.IsRealTime;
+                        break;
                 }
+
+                if (!gameManager.IsRealTime)
+                    gameManager.CurrentObject.Down();
 
                 Thread.Sleep(5);
             }

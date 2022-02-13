@@ -13,7 +13,7 @@ namespace Tetris.Managers
 
         public bool IsColision(int x, int y, int? nextIndexRotate = null)
         {
-            foreach (var objLock in gameManager.Objects.Where(obj => obj.LockObject == true))
+            foreach (var objLock in gameManager.ObjectsLock())
             {
                 foreach (var objLockPos in objLock.Coordinates[objLock.IndexRotate])
                 {
@@ -21,9 +21,9 @@ namespace Tetris.Managers
 
 
                     if (!nextIndexRotate.HasValue)
-                        possuiCordenada = gameManager.CurrentObject.Coordinates[gameManager.CurrentObject.IndexRotate].Any(cordenada => cordenada.X + x == objLockPos.X && cordenada.Y + y == objLockPos.Y);
+                        possuiCordenada = gameManager.CurrentObject.Coordinates[gameManager.CurrentObject.IndexRotate].Any(cordenada => cordenada.x + x == objLockPos.x && cordenada.y + y == objLockPos.y);
                     else
-                        possuiCordenada = gameManager.CurrentObject.Coordinates[nextIndexRotate.Value].Any(cordenada => cordenada.X == objLockPos.X && cordenada.Y == objLockPos.Y);
+                        possuiCordenada = gameManager.CurrentObject.Coordinates[nextIndexRotate.Value].Any(cordenada => cordenada.x == objLockPos.x && cordenada.y == objLockPos.y);
 
 
                     if (possuiCordenada)

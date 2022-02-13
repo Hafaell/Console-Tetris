@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HUD\NextPiece.cs" />
+    <Compile Include="Managers\ClearLines.cs" />
     <Compile Include="Managers\Collisions.cs" />
     <Compile Include="Managers\GameManager.cs" />
     <Compile Include="HUD\UI.cs" />
@@ -50,9 +52,9 @@
     <Compile Include="Pieces\Lpiece.cs" />
     <Compile Include="Pieces\Rectangle.cs" />
     <Compile Include="Pieces\Square.cs" />
-    <Compile Include="Score.cs" />
+    <Compile Include="HUD\Score.cs" />
     <Compile Include="StartGame.cs" />
-    <Compile Include="Managers\Cordenada.cs" />
+    <Compile Include="Managers\Vector2.cs" />
     <Compile Include="HUD\Grid.cs" />
     <Compile Include="Managers\Inputs.cs" />
     <Compile Include="Pieces\TetrisObjects.cs" />

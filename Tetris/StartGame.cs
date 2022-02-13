@@ -9,7 +9,7 @@ namespace Tetris
     {
         private GameManager gameManager;
         private Inputs inputClass;
-        private Score score;
+        private ClearLines clearLines;
         private UI ui;
 
         public void Start()
@@ -23,8 +23,7 @@ namespace Tetris
             gameManager.SelectNextObject();
             gameManager.AddObjects(gameManager.NextObject);
 
-            score = new Score();
-
+            clearLines = new ClearLines(UI.GetScore());
             inputClass = new Inputs();
         }
 
@@ -38,8 +37,7 @@ namespace Tetris
                 {
                     if (!gameManager.Lose)
                     {
-                        ui.grid.DrawGrid();
-                        score.DrawScore();
+                        ui.DrawUI();                        
                     }
                     else
                     {
@@ -56,12 +54,18 @@ namespace Tetris
             {
                 while (true)
                 {
-                    gameManager.CurrentObject.Down();
-                    score.ClearLinesComplete();
-
-                    if (gameManager.CurrentObject.LockObject)
+                    if (!gameManager.Lose)
                     {
-                        gameManager.AddObjects(gameManager.NextObject);
+                        if (gameManager.IsRealTime)
+                            gameManager.CurrentObject.Down();
+
+                        clearLines.ClearLinesCompleted();
+
+                        if (gameManager.CurrentObject.LockObject)
+                        {
+                            gameManager.AddObjects(gameManager.NextObject);
+                        }
+
                     }
 
                     Thread.Sleep(500);

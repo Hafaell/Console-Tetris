@@ -9,36 +9,27 @@ namespace Tetris.HUD
 {   
     class Grid
     {
-        public int borderX { get; private set; }
-        public int borderY { get; private set; }
-
-        public int posX { get; }
-        public int posY { get; } 
-
-        private int sizeX;
-        private int sizeY;
+        public Vector2 position { get; }
+        public Vector2 size { get; }
 
         private string branco = "-";
 
-        public Grid(int sizeX, int sizeY, int posX, int posY)
+        public Grid(Vector2 position, Vector2 size)
         {
-            this.sizeX = sizeX;
-            this.sizeY = sizeY;
+            int borderX = size.x + position.x;
+            int borderY = size.y + position.y;
 
-            this.posX = posX;
-            this.posY = posY;
-
-            borderX = sizeX + posX;
-            borderY = sizeY + posY;
+            this.position = position;
+            this.size = new Vector2(borderX, borderY);
         }
 
         public void DrawGrid()
         {
             if (GameManager.instance.Objects.Count <= 0)
             {
-                for (int i = posX; i < borderX; i++)
+                for (int i = position.x; i < size.x; i++)
                 {
-                    for (int j = posY; j < borderY; j++)
+                    for (int j = position.y; j < size.y; j++)
                     {
                         Console.SetCursorPosition(i, j);
                         Console.Write(branco);
@@ -47,9 +38,9 @@ namespace Tetris.HUD
             }
             else
             {
-                for (int i = posX; i < borderX; i++)
+                for (int i = position.x; i < size.x; i++)
                 {
-                    for (int j = posY; j < borderY; j++)
+                    for (int j = position.y; j < size.y; j++)
                     {
                         lock (GameManager.instance.Objects)
                         {
@@ -58,9 +49,9 @@ namespace Tetris.HUD
                             var possuiCordenada = false;
                             TetrisObjects index = null;
 
-                            foreach (var item in GameManager.instance.Objects)
+                            foreach (var item in GameManager.instance.Objects.ToList())
                             {
-                                possuiCordenada = item.Coordinates[item.IndexRotate].Any(cordenada => cordenada.X == i && cordenada.Y == j);
+                                possuiCordenada = item.Coordinates[item.IndexRotate].Any(cordenada => cordenada.x == i && cordenada.y == j);
 
                                 if (possuiCordenada)
                                 {

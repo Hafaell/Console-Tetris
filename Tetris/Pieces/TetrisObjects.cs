@@ -9,16 +9,12 @@ namespace Tetris.Pieces
     public class TetrisObjects
     {
         public string Caracter { get => caracter; }
-        public bool LockObject { set
-            {
-                lockObject = value;
-            }
-            get => lockObject; }
+        public bool LockObject { get => lockObject; }
         public ConsoleColor Color { get => color; }
         public int IndexRotate { get => indexRotate; }
-        public List<List<Cordenada>> Coordinates { get => coordinates; }
+        public List<List<Vector2>> Coordinates { get => coordinates; }
 
-        public TetrisObjects(List<List<Cordenada>> coordList, string caracterType, ConsoleColor consoleColor)
+        public TetrisObjects(List<List<Vector2>> coordList, string caracterType, ConsoleColor consoleColor)
         {
             gameManager = GameManager.GetInstance();
             coordinates = coordList;
@@ -35,7 +31,7 @@ namespace Tetris.Pieces
         private int indexRotate;
 
         private Collisions collision;
-        private List<List<Cordenada>> coordinates;
+        private List<List<Vector2>> coordinates;
 
         public void Rotate(int value)
         {
@@ -54,9 +50,9 @@ namespace Tetris.Pieces
                 nextIndexRotate = coordinates.Count - 1;
             }
 
-            if (coordinates[nextIndexRotate].Any(corden => corden.X == UI.GetGrid().borderX))
+            if (coordinates[nextIndexRotate].Any(corden => corden.x == UI.GetGrid().size.x))
                 return;
-            else if (coordinates[nextIndexRotate].Any(corden => corden.X == UI.GetGrid().posX - 1))
+            else if (coordinates[nextIndexRotate].Any(corden => corden.x == UI.GetGrid().position.x - 1))
                 return;
             else if (collision.IsColision(value, 0, nextIndexRotate))
                 return;
@@ -67,7 +63,7 @@ namespace Tetris.Pieces
 
         public void Right()
         {
-            if (lockObject || coordinates[indexRotate].Any(corden => corden.X == UI.GetGrid().borderX - 1))
+            if (lockObject || coordinates[indexRotate].Any(corden => corden.x == UI.GetGrid().size.x - 1))
                 return;
 
             MovementX(1);
@@ -75,7 +71,7 @@ namespace Tetris.Pieces
 
         public void Left()
         {
-            if (lockObject || coordinates[indexRotate].Any(corden => corden.X == UI.GetGrid().posX))
+            if (lockObject || coordinates[indexRotate].Any(corden => corden.x == UI.GetGrid().position.x))
                 return;
 
             MovementX(-1);
@@ -83,7 +79,7 @@ namespace Tetris.Pieces
 
         public void Down()
         {
-            if (coordinates[indexRotate].Any(corden => corden.Y == UI.GetGrid().borderY - 1))
+            if (coordinates[indexRotate].Any(corden => corden.y == UI.GetGrid().size.y - 1))
             {
                 lockObject = true;
                 return;
@@ -101,7 +97,7 @@ namespace Tetris.Pieces
             {
                 foreach (var coord in item)
                 {
-                    coord.X += value;
+                    coord.x += value;
                 }
             }
         }
@@ -118,7 +114,7 @@ namespace Tetris.Pieces
             {
                 foreach (var coord in item)
                 {
-                    coord.Y += value;
+                    coord.y += value;
                 }
             }
         }

@@ -7,47 +7,47 @@ namespace Tetris.Pieces
 {
     class Lpiece : TetrisObjects
     {
-        private static int mid = UI.GetGrid().posX + (UI.GetGrid().borderX - UI.GetGrid().posX) / 2 - 1;
-        private static int posY = UI.GetGrid().posY;
+        private static int mid = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
+        private static int posY = UI.GetGrid().position.y;
 
         public Lpiece() : base(
 
-            new List<List<Cordenada>> {
+            new List<List<Vector2>> {
 
-                new List<Cordenada>
+                new List<Vector2>
                 {
-                    new Cordenada(mid, posY),
-                    new Cordenada(mid, posY + 1),
-                    new Cordenada(mid, posY + 2),
-                    new Cordenada(mid, posY + 3),
-                    new Cordenada(mid + 1, posY + 3)
+                    new Vector2(mid, posY),
+                    new Vector2(mid, posY + 1),
+                    new Vector2(mid, posY + 2),
+                    new Vector2(mid, posY + 3),
+                    new Vector2(mid + 1, posY + 3)
                 },
 
-                new List<Cordenada>
+                new List<Vector2>
                 {
-                    new Cordenada(mid + 2, posY + 3),
-                    new Cordenada(mid + 1, posY + 3),
-                    new Cordenada(mid, posY + 3),
-                    new Cordenada(mid - 1, posY + 3),
-                    new Cordenada(mid - 1, posY + 4)
+                    new Vector2(mid + 2, posY + 3),
+                    new Vector2(mid + 1, posY + 3),
+                    new Vector2(mid, posY + 3),
+                    new Vector2(mid - 1, posY + 3),
+                    new Vector2(mid - 1, posY + 4)
                 },
 
-                new List<Cordenada>
+                new List<Vector2>
                 {
-                    new Cordenada(mid, posY + 3),
-                    new Cordenada(mid, posY + 2),
-                    new Cordenada(mid, posY + 1),
-                    new Cordenada(mid, posY),
-                    new Cordenada(mid - 1, posY)
+                    new Vector2(mid, posY + 3),
+                    new Vector2(mid, posY + 2),
+                    new Vector2(mid, posY + 1),
+                    new Vector2(mid, posY),
+                    new Vector2(mid - 1, posY)
                 },
 
-                new List<Cordenada>
+                new List<Vector2>
                 {
-                    new Cordenada(mid - 1, posY + 3),
-                    new Cordenada(mid, posY + 3),
-                    new Cordenada(mid + 1, posY + 3),
-                    new Cordenada(mid + 2, posY + 3),
-                    new Cordenada(mid + 2, posY + 2)
+                    new Vector2(mid - 1, posY + 3),
+                    new Vector2(mid, posY + 3),
+                    new Vector2(mid + 1, posY + 3),
+                    new Vector2(mid + 2, posY + 3),
+                    new Vector2(mid + 2, posY + 2)
                 }
 
             },

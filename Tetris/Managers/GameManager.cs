@@ -16,6 +16,8 @@ namespace Tetris.Managers
         public bool Lose { get => lose; set => lose = value; }
         public bool IsRealTime { get => isRealTime; set => isRealTime = value; }
 
+        public int Points { get => points; }
+        public int Score { get => score; }
         public List<TetrisObjects> Objects { get => objects; }
         public TetrisObjects CurrentObject { get => currentObject; }
         public TetrisObjects NextObject { get => nextObject; }
@@ -27,15 +29,13 @@ namespace Tetris.Managers
         private bool lose;
         private bool isRealTime;
 
+        private int score;
+        private int points;
+        private int initialPoints = 0;
+
         private List<TetrisObjects> objects = new List<TetrisObjects>();
 
         public static GameManager instance = null;
-        public static Action RestartGame_ACT;
-
-        private GameManager()
-        {
-            RestartGame_ACT += ResetGame;
-        }
 
         public void AddObjects()
         {
@@ -43,26 +43,6 @@ namespace Tetris.Managers
 
             objects.Add(currentObject);
             SelectNextObject();
-        }
-
-        private void ResetPositionObjsToGrid()
-        {
-            int midX = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
-            int posY = UI.GetGrid().position.y;
-
-            currentObject = nextObject;
-
-            int diferenceX = midX - currentObject.Coordinates[0][0].x;
-            int diferenceY = posY - currentObject.Coordinates[0][0].y;
-
-            foreach (var item in currentObject.Coordinates)
-            {
-                foreach (var coords in item)
-                {
-                    coords.x += diferenceX;
-                    coords.y += diferenceY;
-                }
-            }
         }
 
         public void SelectNextObject()
@@ -93,6 +73,26 @@ namespace Tetris.Managers
             }
         }
 
+        private void ResetPositionObjsToGrid()
+        {
+            int midX = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
+            int posY = UI.GetGrid().position.y;
+
+            currentObject = nextObject;
+
+            int diferenceX = midX - currentObject.Coordinates[0][0].x;
+            int diferenceY = posY - currentObject.Coordinates[0][0].y;
+
+            foreach (var item in currentObject.Coordinates)
+            {
+                foreach (var coords in item)
+                {
+                    coords.x += diferenceX;
+                    coords.y += diferenceY;
+                }
+            }
+        }
+
         public void ResetGame()
         {
             Console.Clear();
@@ -101,7 +101,19 @@ namespace Tetris.Managers
             SelectNextObject();
             AddObjects();
 
+            points = initialPoints;
+
             lose = false;
+        }
+
+        public void Scored()
+        {
+            points++;
+
+            if (points > score)
+            {
+                score = points;
+            }
         }
 
         public IEnumerable<TetrisObjects> ObjectsLock()

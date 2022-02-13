@@ -29,9 +29,9 @@ namespace Tetris.Managers
                         break;
 
                     case ConsoleKey.R:
-                        if (gameManager.Lose)
-                            GameManager.RestartGame_ACT?.Invoke();
 
+                        if (gameManager.Lose)
+                            gameManager.ResetGame();
                         break;
 
                     case ConsoleKey.DownArrow:

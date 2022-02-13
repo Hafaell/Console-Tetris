@@ -13,12 +13,15 @@ namespace Tetris.HUD
         public Vector2 gridPos = new Vector2(0, 0);
         public Vector2 gridSize = new Vector2(10, 20);
 
-        private Score score;
-        public Vector2 scorePos = new Vector2(14, 8);
-
         private NextPiece nextPiece;
         public Vector2 nextPiecePos = new Vector2(14, 0);
         public Vector2 nextPieceSize = new Vector2(9, 7);
+
+        private Score score;
+        public Vector2 scorePos = new Vector2(14, 8);
+
+        private Lose lose;
+        public Vector2 losePos = new Vector2(14, 11);
 
         public static UI instance;
 
@@ -29,13 +32,17 @@ namespace Tetris.HUD
                 new Vector2(gridSize.x, gridSize.y)
                 );
 
+            nextPiece = new NextPiece(
+                new Vector2(uiPosition.x + nextPiecePos.x, uiPosition.y + nextPiecePos.y),
+                new Vector2(nextPieceSize.x, nextPieceSize.y)
+                );
+
             score = new Score(
                 new Vector2(uiPosition.x + scorePos.x, uiPosition.y + scorePos.y)
                 );
 
-            nextPiece = new NextPiece(
-                new Vector2(uiPosition.x + nextPiecePos.x, uiPosition.y + nextPiecePos.y),
-                new Vector2(nextPieceSize.x, nextPieceSize.y)
+            lose = new Lose(
+                new Vector2(uiPosition.x + losePos.x, uiPosition.y + losePos.y)
                 );
         }
 
@@ -44,6 +51,9 @@ namespace Tetris.HUD
             grid.DrawGrid();
             score.DrawScore();
             nextPiece.DrawNextPiece();
+
+            if(GameManager.instance.Lose)
+                lose.DrawLose();
         }
 
         public static Grid GetGrid()

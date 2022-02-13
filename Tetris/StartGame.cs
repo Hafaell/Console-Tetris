@@ -23,7 +23,7 @@ namespace Tetris
             gameManager.SelectNextObject();
             gameManager.AddObjects();
 
-            clearLines = new ClearLines(UI.GetScore());
+            clearLines = new ClearLines();
             inputClass = new Inputs();
         }
 
@@ -35,15 +35,7 @@ namespace Tetris
             {
                 while (true)
                 {
-                    if (!gameManager.Lose)
-                    {
-                        ui.DrawUI();                        
-                    }
-                    else
-                    {
-                        Console.SetCursorPosition(20, 0);
-                        Console.Write("Lose");
-                    }
+                    ui.DrawUI();
 
                     Thread.Sleep(1);
                 }

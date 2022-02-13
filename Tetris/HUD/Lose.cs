@@ -3,22 +3,23 @@ using Tetris.Managers;
 
 namespace Tetris.HUD
 {
-    class Score
+    class Lose
     {
         private Vector2 position;
-        
-        public Score(Vector2 position)
+
+        public Lose(Vector2 position)
         {
             this.position = position;
         }
 
-        public void DrawScore()
+        public void DrawLose()
         {
             Console.SetCursorPosition(position.x, position.y);
             Console.ForegroundColor = ConsoleColor.White;
 
-            Console.Write($"Pontuação: {GameManager.instance.Points}");
+            Console.Write($"Você perdeu");
+            Console.SetCursorPosition(position.x, position.y + 1);
+            Console.Write($"Melhor Pontuação: {GameManager.instance.Score}");
         }
     }
 }
-

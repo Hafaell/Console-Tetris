@@ -9,13 +9,6 @@ namespace Tetris.Managers
 {
     class ClearLines
     {
-        Score score;
-
-        public ClearLines(Score score)
-        {
-            this.score = score;
-        }
-
         public void ClearLinesCompleted()
         {
             var indexRotate = GameManager.instance.CurrentObject.IndexRotate;
@@ -64,7 +57,7 @@ namespace Tetris.Managers
                             if (possuiCoordenada)
                             {
                                 lockObject.Coordinates[lockObject.IndexRotate].Remove(coordenada);
-                                score.Scored();
+                                GameManager.instance.Scored();
                             }
                         }
                     }

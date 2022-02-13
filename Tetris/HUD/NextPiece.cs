@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tetris.Managers;
+using Tetris.Pieces;
 
 namespace Tetris.HUD
 {
     class NextPiece
     {
-
-        private Vector2 position;
-        private Vector2 size;
+        public Vector2 position;
+        public Vector2 size;
 
         private string branco = "I";
 
@@ -32,29 +32,47 @@ namespace Tetris.HUD
 
         public void DrawNextPiece()
         {
+            DrawNextPieces();
+        }
+
+        private void ClearGrid()
+        {
             for (int i = position.x; i < size.x; i++)
             {
                 for (int j = position.y; j < size.y; j++)
                 {
-                    if (i == size.x - 1|| i == position.x
+                    Console.SetCursorPosition(i, j);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("");
+                }
+            }
+        }
+
+        private void DrawNextPieces()
+        {
+            for (int i = position.x; i < size.x; i++)
+            {
+                for (int j = position.y; j < size.y; j++)
+                {
+                    Console.SetCursorPosition(i, j);
+
+                    if (i == size.x - 1 || i == position.x
                         || j == size.y - 1 || j == position.y)
                     {
-                        Console.SetCursorPosition(i, j);
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(branco);
+                        continue;
                     }
-                    else
+
+                    if (!GameManager.instance.NextObject.Coordinates[0].Any(coords => coords.x == i && coords.y - 1 == j))
                     {
-                        //if (GameManager.instance.NextObject.Coordinates[0].Any(coord => coord.x == i && coord.y == j))
-                        //{
-                            //Console.SetCursorPosition(i, j);
-                            //Console.Write(GameManager.instance.NextObject.Caracter);
-                        //}
-                        //else
-                        //{
-                            //Console.SetCursorPosition(i, j);
-                            //Console.Write("");
-                        //}
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(" ");
+                        continue;
                     }
+
+                    Console.ForegroundColor = GameManager.instance.NextObject.Color;
+                    Console.Write(GameManager.instance.NextObject.Caracter);
                 }
             }
         }

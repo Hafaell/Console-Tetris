@@ -7,10 +7,7 @@ namespace Tetris.Pieces
 {
     class Lpiece : TetrisObjects
     {
-        private static int mid = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
-        private static int posY = UI.GetGrid().position.y;
-
-        public Lpiece() : base(
+        public Lpiece(int mid, int posY) : base(
 
             new List<List<Vector2>> {
 
@@ -52,7 +49,7 @@ namespace Tetris.Pieces
 
             },
 
-            "%", ConsoleColor.Magenta)
+           "%", ConsoleColor.Magenta)
         { }
     }
 }

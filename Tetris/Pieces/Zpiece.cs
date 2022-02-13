@@ -7,10 +7,7 @@ namespace Tetris.Pieces
 {
     class Zpiece : TetrisObjects
     {
-        private static int mid = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
-        private static int posY = UI.GetGrid().position.y;
-
-        public Zpiece() : base(
+        public Zpiece(int mid, int posY) : base(
 
             new List<List<Vector2>> {
 
@@ -29,9 +26,9 @@ namespace Tetris.Pieces
                     new Vector2(mid + 1, posY + 1),
                     new Vector2(mid + 1, posY + 2)
                 },
-            }
+            },
 
-            , "&", ConsoleColor.Green)
+            "&", ConsoleColor.Green)
         { }
     }
 }

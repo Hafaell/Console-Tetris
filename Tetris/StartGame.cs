@@ -21,7 +21,7 @@ namespace Tetris
             ui = UI.GetInstance();
 
             gameManager.SelectNextObject();
-            gameManager.AddObjects(gameManager.NextObject);
+            gameManager.AddObjects();
 
             clearLines = new ClearLines(UI.GetScore());
             inputClass = new Inputs();
@@ -45,7 +45,7 @@ namespace Tetris
                         Console.Write("Lose");
                     }
 
-                    Thread.Sleep(5);
+                    Thread.Sleep(1);
                 }
 
             }).Start();
@@ -59,11 +59,10 @@ namespace Tetris
                         if (gameManager.IsRealTime)
                             gameManager.CurrentObject.Down();
 
-                        clearLines.ClearLinesCompleted();
-
                         if (gameManager.CurrentObject.LockObject)
                         {
-                            gameManager.AddObjects(gameManager.NextObject);
+                            clearLines.ClearLinesCompleted();
+                            gameManager.AddObjects();
                         }
 
                     }

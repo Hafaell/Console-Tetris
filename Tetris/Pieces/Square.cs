@@ -7,10 +7,7 @@ namespace Tetris.Pieces
 {
     public class Square : TetrisObjects
     {
-        private static int mid = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
-        private static int posY = UI.GetGrid().position.y;
-
-        public Square() : base(
+        public Square(int mid, int posY) : base(
 
             new List<List<Vector2>> {
 
@@ -22,9 +19,9 @@ namespace Tetris.Pieces
                     new Vector2(mid + 1, 1 + posY)
                 }
 
-            }
+            },
 
-            , "@", ConsoleColor.Yellow)
+           "@", ConsoleColor.Yellow)
         { }
     }
 }

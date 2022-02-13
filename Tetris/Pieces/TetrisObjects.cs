@@ -17,9 +17,11 @@ namespace Tetris.Pieces
         public TetrisObjects(List<List<Vector2>> coordList, string caracterType, ConsoleColor consoleColor)
         {
             gameManager = GameManager.GetInstance();
-            coordinates = coordList;
-            caracter = caracterType;
-            color = consoleColor;
+
+            this.coordinates = coordList;
+            this.caracter = caracterType;
+            this.color = consoleColor;
+
             collision = new Collisions();
         }
 

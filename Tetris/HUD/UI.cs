@@ -5,8 +5,10 @@ namespace Tetris.HUD
 {
     class UI
     {
-        private Vector2 uiPosition;
+        //Movement all UI objects
+        private Vector2 uiPosition = new Vector2(0, 0);
 
+        //movement just single object in UI
         private Grid grid;
         public Vector2 gridPos = new Vector2(0, 0);
         public Vector2 gridSize = new Vector2(10, 20);
@@ -20,10 +22,8 @@ namespace Tetris.HUD
 
         public static UI instance;
 
-        private UI(Vector2 position)
+        private UI()
         {
-            uiPosition = position;
-
             grid = new Grid(
                 new Vector2(uiPosition.x + gridPos.x, uiPosition.y + gridPos.y), 
                 new Vector2(gridSize.x, gridSize.y)
@@ -56,11 +56,16 @@ namespace Tetris.HUD
             return instance.score;
         }
 
+        public static NextPiece GetNextPiece()
+        {
+            return instance.nextPiece;
+        }
+
         public static UI GetInstance()
         {
             if (instance == null)
             {
-                instance = new UI(new Vector2(50, 1));
+                instance = new UI();
             }
 
             return instance;

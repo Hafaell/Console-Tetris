@@ -70,6 +70,7 @@ namespace Tetris.Managers
                     }
 
                     UpdateLockObj(gridY);
+                    ClearLinesCompleted();
                 }
             }
 

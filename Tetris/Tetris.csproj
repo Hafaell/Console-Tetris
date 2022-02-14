@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HUD\Comands.cs" />
     <Compile Include="HUD\Lose.cs" />
     <Compile Include="HUD\NextPiece.cs" />
     <Compile Include="Managers\ClearLines.cs" />

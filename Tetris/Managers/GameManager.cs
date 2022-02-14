@@ -95,7 +95,6 @@ namespace Tetris.Managers
 
         public void ResetGame()
         {
-            Console.Clear();
             objects.Clear();
 
             SelectNextObject();
@@ -104,6 +103,7 @@ namespace Tetris.Managers
             points = initialPoints;
 
             lose = false;
+            Console.Clear();
         }
 
         public void Scored()

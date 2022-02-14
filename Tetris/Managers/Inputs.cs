@@ -20,11 +20,11 @@ namespace Tetris.Managers
 
                 switch (read.Key)
                 {
-                    case ConsoleKey.D:
+                    case ConsoleKey.X:
                         gameManager.CurrentObject.Rotate(1);
                         break;
 
-                    case ConsoleKey.A:
+                    case ConsoleKey.Z:
                         gameManager.CurrentObject.Rotate(-1);
                         break;
 
@@ -50,6 +50,7 @@ namespace Tetris.Managers
 
                     case ConsoleKey.Tab:
                         gameManager.IsRealTime = !gameManager.IsRealTime;
+                        Console.Clear();
                         break;
                 }
 

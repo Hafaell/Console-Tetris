@@ -50,6 +50,9 @@
     <Compile Include="Managers\Collisions.cs" />
     <Compile Include="Managers\GameManager.cs" />
     <Compile Include="HUD\UI.cs" />
+    <Compile Include="Pieces\InverseLpiece.cs" />
+    <Compile Include="Pieces\Npiece.cs" />
+    <Compile Include="Pieces\Tpiece.cs" />
     <Compile Include="Pieces\Zpiece.cs" />
     <Compile Include="Pieces\Lpiece.cs" />
     <Compile Include="Pieces\Rectangle.cs" />

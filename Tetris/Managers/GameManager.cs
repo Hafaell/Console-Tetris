@@ -8,7 +8,7 @@ namespace Tetris.Managers
 {
     public enum PieceTypes
     {
-        Zpiece, Lpiece, Rectange, Square
+        Zpiece, Lpiece, Rectange, Square, Npiece, inverseLpiece, Tpiece
     }
 
     class GameManager
@@ -39,7 +39,7 @@ namespace Tetris.Managers
 
         public void AddObjects()
         {
-            ResetPositionObjsToGrid();
+            ResetPositionObjectsToGrid();
 
             objects.Add(currentObject);
             SelectNextObject();
@@ -51,12 +51,24 @@ namespace Tetris.Managers
             int posY = UI.GetNextPiece().position.y + (UI.GetNextPiece().size.y - UI.GetNextPiece().position.y) / 2;
 
             Random rand = new Random();
-            piceTypes = (PieceTypes)rand.Next(0, 4);
+            piceTypes = (PieceTypes)rand.Next(0, 7);
 
             switch (piceTypes)
             {
                 case PieceTypes.Lpiece:
                     nextObject = new Lpiece(midX, posY);
+                    break;
+
+                case PieceTypes.inverseLpiece:
+                    nextObject = new InverseLpiece(midX, posY);
+                    break;
+
+                case PieceTypes.Tpiece:
+                    nextObject = new Tpiece(midX, posY);
+                    break;
+
+                case PieceTypes.Npiece:
+                    nextObject = new Npiece(midX, posY);
                     break;
 
                 case PieceTypes.Zpiece:
@@ -73,7 +85,7 @@ namespace Tetris.Managers
             }
         }
 
-        private void ResetPositionObjsToGrid()
+        private void ResetPositionObjectsToGrid()
         {
             int midX = UI.GetGrid().position.x + (UI.GetGrid().size.x - UI.GetGrid().position.x) / 2 - 1;
             int posY = UI.GetGrid().position.y;

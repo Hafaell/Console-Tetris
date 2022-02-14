@@ -15,7 +15,7 @@ namespace Tetris.HUD
         public void DrawLose()
         {
             Console.SetCursorPosition(position.x, position.y);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Red;
 
             Console.Write($"Você perdeu");
             Console.SetCursorPosition(position.x, position.y + 1);

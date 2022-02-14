@@ -20,7 +20,7 @@ namespace Tetris.HUD
         public Vector2 nextPieceSize = new Vector2(9, 7);
 
         private Score score;
-        public Vector2 scorePos = new Vector2(-14, 8);
+        public Vector2 scorePos = new Vector2(-15, 8);
 
         private Lose lose;
         public Vector2 losePos = new Vector2(14, 10);
